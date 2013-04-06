@@ -10,7 +10,7 @@ Design
 Esitys turns each section inside 'slides' article into full size slides.
 Each slide can contain any html and thus can present anything a website could.
 Slides do not have any margins or padding nor any other preset rules so the presentation maker can decide exactly how the slides look like.
-Slides can be easily themed with css. Once theme is set, you can concentrate on content.
+Slides can be easily themed with css. Once a theme is set, you can concentrate on content.
 
 Features
 ----
