@@ -21,7 +21,7 @@ Features
 
 Example
 ----
-`<body>
+```<body>
 	<article class="slides">
 		<section>
 			<h1>Page 1</h1>
@@ -44,7 +44,7 @@ Example
 		slides.createMobileNavigation();
 		slides.start();
 	</script>
-</body>`
+</body>```
 
 This will produce:
 - 3 slides with progress bar on top
