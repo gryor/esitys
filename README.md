@@ -3,6 +3,8 @@ Esitys
 
 Esitys is a lightweight slide show engine based on HTML 5 and JQuery.
 
+**Launch by opening "esitys.html" in a browser.**
+
 Design
 ----
 Esitys turns each section inside 'slides' article into full size slides.
