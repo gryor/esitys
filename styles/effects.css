@@ -1,0 +1,20 @@
+.slides section {
+
+}
+
+.effect-slide {
+	transition-property: transform;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-out;
+}
+
+
+.progress div{
+
+}
+
+body {
+	transition-property: background-color;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-in-out;
+}
