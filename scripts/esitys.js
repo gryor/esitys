@@ -3,6 +3,7 @@ function Slides(useDefaults) {
     var currentSlide = $(slidesId + ' > section').first();
     var fontMaxSize = true;
     var minimumFontSize = 10;
+    var maximumFontSize = 48;
 
     if((useDefaults === true) || (useDefaults === undefined)) {
         showProgress();
@@ -193,6 +194,14 @@ function Slides(useDefaults) {
 
         while(overflowing() === false) {
             fontSize = fontSize * 2;
+
+            if(maximumFontSize !== undefined)
+                if(fontSize >= maximumFontSize) {
+                    fontSize = maximumFontSize;
+                    currentSlide.css('font-size', fontSize + 'px');
+                    break;
+                }
+
             currentSlide.css('font-size', fontSize + 'px');
         }
 
@@ -232,8 +241,13 @@ function Slides(useDefaults) {
             currentSlide.css('font-size', fontSize + 'px');
         }
 
-        if(fontSize < minimumFontSize)
-            currentSlide.css('font-size', minimumFontSize + 'px');
+        if(maximumFontSize !== undefined)
+            if(fontSize > maximumFontSize)
+                    currentSlide.css('font-size', maximumFontSize + 'px');
+        
+        if(minimumFontSize !== undefined)
+            if(fontSize < minimumFontSize)
+                currentSlide.css('font-size', minimumFontSize + 'px');
     }
     
 
@@ -243,8 +257,6 @@ function Slides(useDefaults) {
     this.nextSlide = nextSlide;
     this.previousSlide = previousSlide;
     this.currentSlide = currentSlide;
-    this.fontMaxSize = fontMaxSize;
-    this.minimumFontSize = minimumFontSize;
     this.toSlide = toSlide;
     this.start = start;
     this.handleKeyEvents = handleKeyEvents;
@@ -258,4 +270,40 @@ function Slides(useDefaults) {
     this.overflowingHeight = overflowingHeight;
     this.overflowingWidth = overflowingWidth;
     this.overflowing = overflowing;
+
+    this.__defineGetter__('maximumFontSize', function() {
+        return maximumFontSize;
+    });
+    this.__defineSetter__('maximumFontSize', function(value) {
+        maximumFontSize = value;
+        
+        if(fontMaxSize)
+            maxFontSize();
+        else
+            fixOverflow();
+    });
+
+    this.__defineGetter__('minimumFontSize', function() {
+        return minimumFontSize;
+    });
+    this.__defineSetter__('minimumFontSize', function(value) {
+        minimumFontSize = value;
+        
+        if(fontMaxSize)
+            maxFontSize();
+        else
+            fixOverflow();
+    });
+
+    this.__defineGetter__('fontMaxSize', function() {
+        return fontMaxSize;
+    });
+    this.__defineSetter__('fontMaxSize', function(value) {
+        fontMaxSize = value;
+
+        if(fontMaxSize)
+            maxFontSize();
+        else
+            fixOverflow();
+    });
 }
