@@ -8,16 +8,12 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	overflow-x: hidden;
-	overflow-y: hidden;
 }
 
 .slides {
-	height: 100%;
 }
 
 .slides section {
-	height: 100%;
 	margin: 0em;
 }
 

@@ -1,6 +1,15 @@
-function Slides() {
+function Slides(useDefaults) {
     var slidesId = '.slides';
     var currentSlide = $(slidesId + ' > section').first();
+    var fontMaxSize = true;
+    var minimumFontSize = 10;
+
+    if((useDefaults === true) || (useDefaults === undefined)) {
+        showProgress();
+        handleKeyEvents();
+        createMobileNavigation();
+        start();
+    }
 
     function changeSlidesId(id) {
         if(id === undefined)
@@ -14,8 +23,7 @@ function Slides() {
         $('html, body').scrollTop(0);
     }
 
-    function createSlideAnchors(id, prefix)
-    {
+    function createSlideAnchors(id, prefix) {
         changeSlidesId(id);
 
         $(((id !== undefined) ? id : slidesId) + ' > section').attr('id', function(i, a) {
@@ -23,71 +31,19 @@ function Slides() {
         });
     }
 
-    function showCurrentSlide(previousSlide) {
-
-        var currentSlideClass = currentSlide.attr('class');
-
-        if(currentSlideClass !== undefined) {
-            var animationDurationCurrentSlide = 0;
-            var animationDurationPreviousSlide = 0;
-
-            currentSlideClass.split(' ').forEach(function(e) {
-                if(e.match('effect-') === null)
-                    return;
-
-                currentSlide.show();
-                currentSlide.addClass(e + '-enable');
-
-                var animationDuration = currentSlide.css('animation-duration');
-                var newDuration = +animationDuration.substr(0,animationDuration.length-1) * 1000;
-
-                if(newDuration > animationDurationCurrentSlide)
-                    animationDurationCurrentSlide = newDuration;
-
-                if(previousSlide !== undefined) {
-                    previousSlide.show();
-                    previousSlide.addClass(e + '-previous')
-
-                    animationDuration = previousSlide.css('animation-duration');
-                    newDuration = +animationDuration.substr(0,animationDuration.length-1) * 1000;
-
-                    if(newDuration > animationDurationPreviousSlide)
-                        animationDurationPreviousSlide = newDuration;
-                }
-            });
-
-            if((animationDurationCurrentSlide > 0) || (animationDurationPreviousSlide > 0)) {
-                setTimeout(function() {
-                    previousSlide.hide();
-
-                    var previousSlideClass = previousSlide.attr('class');
-
-                    previousSlideClass.split(' ').forEach(function(e) {
-                        if(e.match('-previous'))
-                            previousSlide.removeClass(e);
-                    });
-
-                }, animationDurationPreviousSlide);
-
-                setTimeout(function() {
-                    var currentSlideClass = currentSlide.attr('class');
-
-                    currentSlideClass.split(' ').forEach(function(e) {
-                        if(e.match('-enable'))
-                            currentSlide.removeClass(e);
-                    });
-
-                }, animationDurationCurrentSlide);
-            }
-        }
-
+    function showCurrentSlide() {
         currentSlide.show();
-        scrollTop();
         updateProgress();
+        
+        if(fontMaxSize)
+            maxFontSize();
+        else
+            fixOverflow();
+
+        scrollTop();
     }
 
     function nextSlide() {
-        var previousSlide = currentSlide;
         var nextSlide = currentSlide.next('section');
         
         if(nextSlide.length === 0)
@@ -97,11 +53,10 @@ function Slides() {
 
         $(slidesId + ' > section').hide();
 
-        showCurrentSlide(previousSlide);
+        showCurrentSlide();
     }
 
     function previousSlide() {
-        var nextSlide = currentSlide;
         var previousSlide = currentSlide.prev('section');
         
         if(previousSlide.length === 0)
@@ -111,21 +66,27 @@ function Slides() {
 
         $(slidesId + ' > section').hide();
 
-        showCurrentSlide(nextSlide);
+        showCurrentSlide();
     }
 
     function toSlide(id) {
-        var previousSlide = currentSlide;
         currentSlide = $(id);
 
         $(slidesId + ' > section').hide();
 
-        showCurrentSlide(previousSlide);
+        showCurrentSlide();
     }
 
     function start() {
         $(slidesId + ' > section').hide();
         showCurrentSlide();
+
+        $(window).resize(function() {
+            if(fontMaxSize)
+                maxFontSize();
+            else
+                fixOverflow();
+        });
     }
 
     function handleKeyEvents() {
@@ -180,6 +141,100 @@ function Slides() {
     function hideProgress() {
         $(slidesId + ' > section > .progress').remove();
     }
+
+    function overflowingHeight() {
+        return $(document).height() > $(window).height();
+    }
+
+    function overflowingWidth() {
+        return $(document).width() > $(window).width();
+    }
+
+    function overflowing() {
+        return overflowingHeight() || overflowingWidth();
+    }
+
+    function resetOriginalFontSize() {
+        if(currentSlide.attr('data-font-size-original') === undefined)
+            currentSlide.attr('data-font-size-original', currentSlide.css('font-size'));
+        else
+            currentSlide.css('font-size', currentSlide.attr('data-font-size-original'));
+    }
+
+    function fixOverflow() {
+        resetOriginalFontSize();
+
+        var originalFontSizeString = currentSlide.css('font-size');
+
+        var fontSizeString = originalFontSizeString;
+        var fontSize = fontSizeString.substr(0, fontSizeString.length-2);
+
+        while(overflowing())
+        {
+            fontSize = fontSize - 0.5;
+
+            if(fontSize <= 0)
+                break;
+
+            currentSlide.css('font-size', fontSize + 'px');
+        }
+
+        if(fontSize < minimumFontSize)
+            currentSlide.css('font-size', minimumFontSize + 'px');
+    }
+
+    function maxFontSize() {
+        resetOriginalFontSize();
+
+        var originalFontSizeString = currentSlide.css('font-size');
+
+        var fontSizeString = originalFontSizeString;
+        var fontSize = fontSizeString.substr(0, fontSizeString.length-2);
+
+        while(overflowing() === false) {
+            fontSize = fontSize * 2;
+            currentSlide.css('font-size', fontSize + 'px');
+        }
+
+        while(overflowing())
+        {
+            fontSize = fontSize - 10;
+
+            if(fontSize <= 0)
+                break;
+            
+            currentSlide.css('font-size', fontSize + 'px');
+        }
+
+        fontSize = fontSize + 10;
+        currentSlide.css('font-size', fontSize + 'px');
+
+        while(overflowing())
+        {
+            fontSize = fontSize - 1;
+
+            if(fontSize <= 0)
+                break;
+            
+            currentSlide.css('font-size', fontSize + 'px');
+        }
+
+        fontSize = fontSize + 1;
+        currentSlide.css('font-size', fontSize + 'px');
+
+        while(overflowing())
+        {
+            fontSize = fontSize - 0.5;
+
+            if(fontSize <= 0)
+                break;
+
+            currentSlide.css('font-size', fontSize + 'px');
+        }
+
+        if(fontSize < minimumFontSize)
+            currentSlide.css('font-size', minimumFontSize + 'px');
+    }
     
 
 // public
@@ -187,6 +242,9 @@ function Slides() {
     this.createSlideAnchors = createSlideAnchors;
     this.nextSlide = nextSlide;
     this.previousSlide = previousSlide;
+    this.currentSlide = currentSlide;
+    this.fontMaxSize = fontMaxSize;
+    this.minimumFontSize = minimumFontSize;
     this.toSlide = toSlide;
     this.start = start;
     this.handleKeyEvents = handleKeyEvents;
@@ -197,4 +255,7 @@ function Slides() {
     this.slideCount = slideCount;
     this.showProgress = showProgress;
     this.hideProgress = hideProgress;
+    this.overflowingHeight = overflowingHeight;
+    this.overflowingWidth = overflowingWidth;
+    this.overflowing = overflowing;
 }
