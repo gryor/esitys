@@ -9,7 +9,6 @@ function Slides(useDefaults) {
         showProgress();
         handleKeyEvents();
         createMobileNavigation();
-        createSlideAnchors();
         start();
     }
 
@@ -34,6 +33,7 @@ function Slides(useDefaults) {
     }
 
     function showCurrentSlide() {
+        $(slidesId + ' > section').hide();
         currentSlide.show();
         updateProgress();
         
@@ -59,8 +59,6 @@ function Slides(useDefaults) {
 
         currentSlide = nextSlide;
 
-        $(slidesId + ' > section').hide();
-
         showCurrentSlide();
     }
 
@@ -72,21 +70,16 @@ function Slides(useDefaults) {
 
         currentSlide = previousSlide;
 
-        $(slidesId + ' > section').hide();
-
         showCurrentSlide();
     }
 
     function toSlide(id) {
-        currentSlide = $('#' + id);
-
-        $(slidesId + ' > section').hide();
+        currentSlide = $(id);
 
         showCurrentSlide();
     }
 
     function start() {
-        $(slidesId + ' > section').hide();
         showCurrentSlide();
 
         $(window).resize(function() {
@@ -115,12 +108,18 @@ function Slides(useDefaults) {
 
     function createMobileNavigation()
     {
-        $('body').click(function(event) {
+        $(slidesId + ' > section').click(function(event) {
             nextSlide();
+            event.stopPropagation();
         });
 
         $(slidesId + ' > section > h1').click(function(event) {
-            previousSlide(); event.stopPropagation();
+            previousSlide();
+            event.stopPropagation();
+        });
+
+        $('a').click(function(event) {
+            event.stopPropagation();
         });
     }
 
