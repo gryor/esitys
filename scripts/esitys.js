@@ -108,9 +108,8 @@ function Slides(useDefaults) {
 
     function createMobileNavigation()
     {
-        $(slidesId + ' > section').click(function(event) {
+        $('body').click(function(event) {
             nextSlide();
-            event.stopPropagation();
         });
 
         $(slidesId + ' > section > h1').click(function(event) {
