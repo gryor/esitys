@@ -1,7 +1,7 @@
 Esitys
 =====
 
-Esitys is a lightweight slide show engine based on HTML 5 and JQuery.
+Esitys is a lightweight slideshow engine based on HTML 5 and JQuery.
 
 **Launch by opening "index.html" in a browser.**
 
