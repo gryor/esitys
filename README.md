@@ -20,6 +20,10 @@ Features
 - Progress of the presentation
 - Slide anchor creation (you can link to an exact slide)
 - Portable
+- Fonts are resized to prevent overflowing
+    - Option to only reduce or max out the size
+    - Options for minimum and maximum font size
+
 
 Example
 ----
@@ -41,11 +45,6 @@ Example
 	</article>
 	<script>
 		slides = new Slides();
-
-		slides.showProgress();
-		slides.handleKeyEvents();
-		slides.createMobileNavigation();
-		slides.start();
 	</script>
 </body>
 ```
