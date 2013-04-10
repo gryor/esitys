@@ -72,7 +72,7 @@ function Slides(useDefaults) {
     }
 
     function toSlide(id) {
-        currentSlide = $(id);
+        currentSlide = $('#' + id);
 
         $(slidesId + ' > section').hide();
 
