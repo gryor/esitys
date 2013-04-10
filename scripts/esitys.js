@@ -43,6 +43,12 @@ function Slides(useDefaults) {
             fixOverflow();
 
         scrollTop();
+
+        // Fix webkit's rendering problem START
+        $('body').hide();
+        scrollTop();
+        $('body').show();
+        // Fix webkit's rendering problem END
     }
 
     function nextSlide() {
@@ -257,7 +263,6 @@ function Slides(useDefaults) {
     this.createSlideAnchors = createSlideAnchors;
     this.nextSlide = nextSlide;
     this.previousSlide = previousSlide;
-    this.currentSlide = currentSlide;
     this.toSlide = toSlide;
     this.start = start;
     this.handleKeyEvents = handleKeyEvents;
