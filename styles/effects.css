@@ -1,0 +1,72 @@
+.effect-slide-left-enable {
+	animation: animation-slide-left 5s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+@keyframes animation-slide-left {
+	from {
+		transform:translate(110%,0);
+	}
+
+	to {
+		transform:translate(0,0);
+	}
+}
+
+.effect-slide-left-previous {
+	animation: animation-slide-left-previous 5s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+@keyframes animation-slide-left-previous {
+	from {
+		transform:translate(0,0);
+	}
+
+	to {
+		transform:translate(-110%,0);
+	}
+}
+
+.effect-slide-right-enable {
+	animation: animation-slide-right 0.7s;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes animation-slide-right {
+	from {
+		transform:translate(-110%,0);
+	}
+
+	to {
+		transform:translate(0,0);
+	}
+}
+
+.effect-slide-right-previous {
+	animation: animation-slide-previous 0.7s;
+	animation-timing-function: ease-in-out;
+	animation-fill-mode: forwards;
+}
+
+@keyframes animation-slide-right-previous {
+	from {
+		transform:translate(0,0);
+	}
+
+	to {
+		transform:translate(110%,0);
+	}
+}
+
+.progress div{
+
+}
+
+body {
+	transition-property: background-color;
+	transition-duration: 0.5s;
+	transition-timing-function: ease-in-out;
+}
