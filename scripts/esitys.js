@@ -9,6 +9,7 @@ function Slides(useDefaults) {
         showProgress();
         handleKeyEvents();
         createMobileNavigation();
+        createSlideAnchors();
         start();
     }
 
