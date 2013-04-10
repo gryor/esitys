@@ -3,7 +3,7 @@ function Slides(useDefaults) {
     var currentSlide = $(slidesId + ' > section').first();
     var fontMaxSize = true;
     var minimumFontSize = 10;
-    var maximumFontSize = 48;
+    var maximumFontSize = 32;
 
     if((useDefaults === true) || (useDefaults === undefined)) {
         showProgress();
