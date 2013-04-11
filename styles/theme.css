@@ -43,3 +43,22 @@ ul, ol {
     width: 90%;
     word-wrap: break-word;
 }
+
+@media print {
+	body {
+		background-color: default;
+		color: black;
+	}
+
+	h1 {
+		margin-top: 1em;
+		text-align: left;
+		font-size: 1em;
+		color: gray;
+	}
+
+	.slides section {
+		font-size: 1em !important;
+		display: block !important;
+	}
+}
