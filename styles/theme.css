@@ -36,3 +36,10 @@ body {
 	background-color: #202020;
 	color: azure;
 }
+
+ul, ol {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    word-wrap: break-word;
+}
