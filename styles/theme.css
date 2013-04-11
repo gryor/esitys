@@ -1,15 +1,15 @@
 p {
 	font-family: 'droid serif', serif;
 	font-weight: 400;
-	font-size: 1.5em;
+	font-size: 1em;
 }
 
 h1 {
 	font-family: 'open sans', sans-serif;
 	font-weight: 300;
-	font-size: 3em;
+	font-size: 1.5em;
 	text-align: center;
-	color: khaki;
+	color: wheat;
 }
 
 .slides {
@@ -34,5 +34,5 @@ h1 {
 
 body {
 	background-color: #202020;
-	color: lightBlue;
+	color: azure;
 }
