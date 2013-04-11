@@ -46,7 +46,7 @@ ul, ol {
 
 @media print {
 	body {
-		background-color: default;
+		background-color: transparent;
 		color: black;
 	}
 
