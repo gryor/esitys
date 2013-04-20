@@ -31,17 +31,20 @@ function Slides(useDefaults) {
             return ((prefix !== undefined) ? prefix : 'slide-') + (i+1);
         });
     }
+    
+    function resize() {
+        if(fontMaxSize)
+            maxFontSize();
+        else
+            fixOverflow();
+    }
 
     function showCurrentSlide() {
         $(slidesId + ' > section').hide();
         currentSlide.show();
         updateProgress();
         
-        if(fontMaxSize)
-            maxFontSize();
-        else
-            fixOverflow();
-
+        resize();
         scrollTop();
 
         // Fix webkit's rendering problem START
@@ -82,12 +85,9 @@ function Slides(useDefaults) {
     function start() {
         showCurrentSlide();
 
-        $(window).resize(function() {
-            if(fontMaxSize)
-                maxFontSize();
-            else
-                fixOverflow();
-        });
+        $(window).load(resize);
+        $(window).resize(resize);
+        $('link').load(resize);
     }
 
     function handleKeyEvents() {
@@ -293,10 +293,7 @@ function Slides(useDefaults) {
     this.__defineSetter__('minimumFontSize', function(value) {
         minimumFontSize = value;
         
-        if(fontMaxSize)
-            maxFontSize();
-        else
-            fixOverflow();
+        resize();
     });
 
     this.__defineGetter__('fontMaxSize', function() {
